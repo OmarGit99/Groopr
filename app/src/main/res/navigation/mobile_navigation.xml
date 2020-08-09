@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_groups">
+
+    <fragment
+        android:id="@+id/navigation_public_feed"
+        android:name="com.example.groopr.ui.public_feed.PublicFeedFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_public_feed" />
+
+    <fragment
+        android:id="@+id/navigation_groups"
+        android:name="com.example.groopr.ui.groups.GroupsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_groups" />
+
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="com.example.groopr.ui.camera.CameraFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/navigation_minimap"
+        android:name="com.example.groopr.ui.minimap.MinimapFragment"
+        android:label="Minimap"
+        tools:layout="@layout/fragment_minimap" />
+    <fragment
+        android:id="@+id/navigation_bills"
+        android:name="com.example.groopr.ui.bills.BillsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_camera" />
+</navigation>

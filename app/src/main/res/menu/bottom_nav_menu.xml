@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_public_feed"
+        android:icon="@drawable/public_feed_icon"
+        android:title="Public feed" />
+
+    <item
+        android:id="@+id/navigation_groups"
+        android:icon="@drawable/groups_icon"
+        android:title="Your Groups" />
+    <item
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/cam_icon"
+        android:title="Cam" />
+    <item
+        android:id="@+id/navigation_minimap"
+        android:icon="@drawable/minimap_icon"
+        android:title="Minimap" />
+    <item
+        android:id="@+id/navigation_bills"
+        android:icon="@drawable/bills_icon"
+        android:title="Bills" />
+
+</menu>

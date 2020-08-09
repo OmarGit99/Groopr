@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/createGroupBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blueappcolorthemelight"
+    tools:context=".ui.groups.AddGroup">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="66dp"
+        android:fontFamily="@font/baloo_bhaina"
+        android:gravity="center_horizontal"
+        android:text="Add a Group"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="52sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.087" />
+
+    <EditText
+        android:id="@+id/groupnamefield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:hint="Your group's name..."
+        android:inputType="textCapSentences"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#BFDBE0E6"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <Spinner
+        android:id="@+id/groupcatsspin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:background="@color/dropdowncolorv2.1"
+        android:minWidth="200dp"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:fontFamily="casual"
+        android:text="Group Category:"
+        android:textColor="@color/appcolorlightv2.1"
+        app:layout_constraintBottom_toTopOf="@+id/groupcatsspin"
+        app:layout_constraintStart_toStartOf="@+id/groupnamefield"
+        app:layout_constraintTop_toBottomOf="@+id/groupnamefield" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="97dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="111dp"
+        android:background="@color/blueappcolorthemedark"
+        android:onClick="createGroup"
+        android:padding="4dp"
+        android:text="CREATE GROUP"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="@color/appcolorlightv2.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groupcatsspin" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="58dp"
+        android:fontFamily="@font/baloo_bhaina"
+        android:text="ADD A GROUP IMAGE"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/groupnamefield"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageView4"
+        android:layout_width="561dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/cam_icon"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+
+    <!--
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="561dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cam_icon" />
+     -->
+
+    <TextView
+        android:id="@+id/errorcreategroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textColor="#E91E63"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

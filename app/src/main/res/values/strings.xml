@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Groopr</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string-array name="Spinner_items">
+        <item>General</item>
+        <item>Art</item>
+        <item>Sport</item>
+        <item>Gaming</item>
+        <item>Book club</item>
+        <item>Biz Team</item>
+        <item>Computers</item>
+        <item>Family</item>
+        <item>Band</item>
+        <item>School</item>
+        <item>Fashion</item>
+        <item>Travel</item>
+        <item>Other</item>
+    </string-array>
+</resources>
+

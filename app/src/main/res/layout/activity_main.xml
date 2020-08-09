@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appcolordarkv2.1"
+    tools:context=".signupactivity">
+
+    <TextView
+        android:id="@+id/phonenumbererror"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="305dp"
+        android:textAlignment="center"
+        android:textColor="#EA1010"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo_bhaina"
+        android:gravity="center_horizontal"
+        android:text="Welcome to"
+        android:textAlignment="center"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="63sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="139dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="77dp"
+        android:layout_marginEnd="67dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.139"
+        app:srcCompat="@drawable/groopronlyheadingandmottov21nobg" />
+
+    <TextView
+        android:id="@+id/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="33dp"
+        android:fontFamily="@font/baloo_bhaina"
+        android:text="Sign up:"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/phonenumberfield"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/usernamefield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Your username..."
+        android:inputType="textCapSentences"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#BFDBE0E6"
+        app:layout_constraintBottom_toTopOf="@+id/usernameerror"
+        app:layout_constraintStart_toStartOf="@+id/phonenumberfield" />
+
+    <EditText
+        android:id="@+id/passwordfield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:ems="10"
+        android:hint="Your password..."
+        android:inputType="textPassword"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#BFDBE0E6"
+        app:layout_constraintBottom_toTopOf="@+id/passworderror"
+        app:layout_constraintStart_toStartOf="@+id/usernamefield" />
+
+    <EditText
+        android:id="@+id/phonenumberfield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:hint="Your phone number..."
+        android:inputType="number"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#BFDBE0E6"
+        app:layout_constraintBottom_toTopOf="@+id/phonenumbererror"
+        app:layout_constraintStart_toStartOf="@+id/signup" />
+
+    <EditText
+        android:id="@+id/reenterpassfield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Reenter your password..."
+        android:inputType="textPassword"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#BFDBE0E6"
+        app:layout_constraintStart_toStartOf="@+id/passwordfield"
+        app:layout_constraintTop_toTopOf="@+id/passworderror" />
+
+    <Button
+        android:id="@+id/signupbutt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blueappcolorthemedark"
+        android:onClick="signup"
+        android:text="Sign up"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textColorHint="#4A266A"
+        android:textColorLink="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/orlogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/usernameerror"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:textAlignment="center"
+        android:textColor="#EA1010"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phonenumbererror" />
+
+    <TextView
+        android:id="@+id/passworderror"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:textAlignment="center"
+        android:textColor="#EA1010"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameerror" />
+
+    <TextView
+        android:id="@+id/orlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="44dp"
+        android:text="Or log in..."
+        android:textColor="#2196F3"
+        android:textSize="17sp"
+        app:layout_constraintStart_toEndOf="@+id/signupbutt"
+        app:layout_constraintTop_toBottomOf="@+id/reenterpassfield" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
