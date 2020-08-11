@@ -44,6 +44,7 @@
         android:layout_marginTop="170dp"
         android:layout_marginBottom="177dp"
         android:padding="15dp"
+        android:scaleType="fitCenter"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/groupcatsspin2"
         app:layout_constraintEnd_toEndOf="parent"

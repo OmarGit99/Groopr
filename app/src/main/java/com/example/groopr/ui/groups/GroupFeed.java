@@ -2,6 +2,8 @@ package com.example.groopr.ui.groups;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.groopr.LoadingScreenActivity;
+import com.example.groopr.Photo;
+import com.example.groopr.PhotoAdapter;
 import com.example.groopr.R;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -32,10 +37,16 @@ import java.util.List;
 public class GroupFeed extends AppCompatActivity {
     String groupname= "";
     String groupId = "";
+    LinearLayout linearLayout;
     ImageView groupicon;
     String[] group_members;
     TextView noofmembers;
+    ProgressBar progressBar;
     String groupcat = "";
+    TextView groupIDtextView;
+
+    private RecyclerView.LayoutManager lManager;
+    private PhotoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +61,34 @@ public class GroupFeed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_feed);
 
-
+        groupIDtextView = findViewById(R.id.groupIDtextView);
 
         TextView groupHeader = findViewById(R.id.GroupHeader);
         groupicon = findViewById(R.id.imageView5);
-
 
 
         Intent intent = getIntent();
         groupname = intent.getStringExtra("GROUPCLICKED");
         groupId = intent.getStringExtra("GROUPIDCLICKED");
 
+
         groupHeader.setText(groupname);
+        groupIDtextView.setText("Group ID: "+groupId);
 
         noofmembers = findViewById(R.id.noofmembers);
-        
+
+        // Get the RecyclerView
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler_view);
+
+        // Use LinearLayout as the layout manager
+        lManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(lManager);
+
+        // Set the custom adapter
+        List<Photo> photoList = new ArrayList<>();
+        adapter = new PhotoAdapter(this, photoList);
+        recycler.setAdapter(adapter);
+
 
         ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Groups");
         parseQuery.whereEqualTo("GroupID", groupId);
@@ -73,7 +97,7 @@ public class GroupFeed extends AppCompatActivity {
             public void done(List<ParseObject> objects, ParseException e) {
                 if(e== null) {
                     if(objects.size()>0) {
-                        for (ParseObject object : objects
+                        for (final ParseObject object : objects
                         ) {
                             String group_membersstr = object.getString("Members");
                             group_members = group_membersstr.split(",");
@@ -103,19 +127,19 @@ public class GroupFeed extends AppCompatActivity {
                             parseQuery1.findInBackground(new FindCallback<ParseObject>() {
                                 @Override
                                 public void done(List<ParseObject> objects, ParseException e) {
-                                    if(e==null) {
+                                    if(e==null && objects.size()>0) {
                                         for (ParseObject parseObject: objects
                                         ) {
                                             ParseFile parseFile1 = parseObject.getParseFile("Post");
                                             parseFile1.getDataInBackground(new GetDataCallback() {
                                                 @Override
                                                 public void done(byte[] data, ParseException e) {
-                                                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                                    /*
-                                                    add feed items to image view here
-                                                     */
-
-
+                                                    if(data != null) {
+                                                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                                        Photo photo = new Photo(bitmap);
+                                                        adapter.addPhoto(photo);
+                                                        ((LinearLayoutManager) lManager).scrollToPositionWithOffset(0, 0);
+                                                    }
                                                 }
                                             });
                                         }
@@ -135,18 +159,6 @@ public class GroupFeed extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

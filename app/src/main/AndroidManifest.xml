@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoadingScreenActivity" ></activity>
+        <activity android:name=".ui.groups.JoinGroupActivity"></activity>
+        <activity android:name=".LoadingScreenActivity" />
         <activity android:name=".ui.groups.GroupFeed" />
         <activity android:name=".ui.groups.AddGroup" />
         <activity android:name=".ui.camera.UploadImage" />

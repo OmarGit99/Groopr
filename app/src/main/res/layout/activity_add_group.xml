@@ -9,6 +9,19 @@
     tools:context=".ui.groups.AddGroup">
 
     <TextView
+        android:id="@+id/orJoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="104dp"
+        android:text="Or join one.."
+        android:textColor="#2196F3"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.087" />
+        app:layout_constraintVertical_bias="0.06" />
 
     <EditText
         android:id="@+id/groupnamefield"
@@ -81,34 +94,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/groupcatsspin" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="58dp"
-        android:fontFamily="@font/baloo_bhaina"
-        android:text="ADD A GROUP IMAGE"
-        android:textColor="@color/appcolorlightv2.1"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/groupnamefield"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageView4"
-        android:layout_width="561dp"
-        android:layout_height="218dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="160dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/cam_icon"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
-
     <!--
     <ImageView
         android:id="@+id/imageView4"
@@ -122,6 +107,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cam_icon" />
      -->
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="58dp"
+        android:fontFamily="@font/baloo_bhaina"
+        android:text="ADD A GROUP IMAGE"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/groupnamefield"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView4"
+        android:layout_width="561dp"
+        android:layout_height="218dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="140dp"
+        android:paddingBottom="8dp"
+        android:src="@drawable/cam_icon"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/errorcreategroup"

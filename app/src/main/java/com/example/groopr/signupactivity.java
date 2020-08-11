@@ -234,8 +234,8 @@ public class signupactivity extends AppCompatActivity {
             Parse.initialize(new Parse.Configuration.Builder(this)
                     .applicationId("myappID")
                     // if desired
-                    .clientKey("YjghCdMjHsq0")
-                    .server("http://18.222.238.16/parse/")
+                    .clientKey("")
+                    .server("http://13.58.151.77/parse/")
                     .build()
             );
 

@@ -59,6 +59,8 @@ public class AddGroup extends AppCompatActivity {
     Boolean isImageUploaded;
     String groupCatSelected;
     Bitmap bitmap;
+    TextView orJoin;
+
     private long mLastClickTime = 0;
 
     //TODO: ADD A SMS INVITATION FOR MEMBERS ON GROUP CREATION
@@ -237,6 +239,16 @@ public class AddGroup extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+
+        orJoin = findViewById(R.id.orJoin);
+
+        orJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), JoinGroupActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //group category selected by the user
         groupCatSelected = "General";  //Default
