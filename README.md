@@ -11,5 +11,5 @@
 •	Each group can post their projects in a social media type feed related to the theme  
 
 BEFORE USING READ THE FOLLOWING POINTS:  
--App might not work if aws server is shut down, please ask me for server status, new credentials might be needed to be put in Parse init in signupactivity.java
+-App will not work if aws server is shut down, please ask me for server status, new credentials might be needed to be put in Parse init in signupactivity.java
 
