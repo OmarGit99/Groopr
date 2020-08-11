@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.groopr.LoadingScreenActivity;
 import com.example.groopr.R;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -33,11 +32,9 @@ import java.util.List;
 public class GroupFeed extends AppCompatActivity {
     String groupname= "";
     String groupId = "";
-    LinearLayout linearLayout;
     ImageView groupicon;
     String[] group_members;
     TextView noofmembers;
-    ProgressBar progressBar;
     String groupcat = "";
 
     @Override
@@ -53,8 +50,7 @@ public class GroupFeed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_feed);
 
-        progressBar = findViewById(R.id.progressBar2);
-        progressBar.setVisibility(View.INVISIBLE);
+
 
         TextView groupHeader = findViewById(R.id.GroupHeader);
         groupicon = findViewById(R.id.imageView5);
@@ -68,16 +64,7 @@ public class GroupFeed extends AppCompatActivity {
         groupHeader.setText(groupname);
 
         noofmembers = findViewById(R.id.noofmembers);
-
-        linearLayout = findViewById(R.id.linearlay);
-        /*
-        ImageView imageView = new ImageView(getApplicationContext());
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-
-         */
+        
 
         ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Groups");
         parseQuery.whereEqualTo("GroupID", groupId);
@@ -124,24 +111,11 @@ public class GroupFeed extends AppCompatActivity {
                                                 @Override
                                                 public void done(byte[] data, ParseException e) {
                                                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                                    /*
+                                                    add feed items to image view here
+                                                     */
 
-                                                    ImageView imageView = new ImageView(getApplicationContext());
-                                                    imageView.setLayoutParams(new ViewGroup.LayoutParams(
-                                                            ViewGroup.LayoutParams.MATCH_PARENT,
-                                                            ViewGroup.LayoutParams.WRAP_CONTENT
-                                                    ));
-                                                    imageView.setImageBitmap(bitmap);
-                                                    linearLayout.addView(imageView);
 
-                                                }
-                                            }, new ProgressCallback() {
-                                                @Override
-                                                public void done(Integer percentDone) {
-                                                    progressBar.setVisibility(View.VISIBLE);
-                                                    progressBar.setProgress(percentDone);
-                                                    if(percentDone == 99){
-                                                        progressBar.setVisibility(View.INVISIBLE);
-                                                    }
                                                 }
                                             });
                                         }
