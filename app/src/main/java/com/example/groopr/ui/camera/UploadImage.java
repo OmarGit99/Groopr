@@ -80,19 +80,33 @@ public class UploadImage extends AppCompatActivity {
                 if(user_groups.get(i).matches(groupSelected)){
                     group_clicked_id = user_group_ids[i];
                 }
+
             }
 
+
+            //Starts a query through the Groups table
             ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Groups");
+
+            //finds all rows where the group id is equal to the group id that has been clicked
             parseQuery.whereEqualTo("GroupID", group_clicked_id);
+
+            //finding..
             parseQuery.findInBackground(new FindCallback<ParseObject>() {
+
+                //the query returns a list of rows called "objects"
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
-                    if(e== null){
-                        if (objects.size()>0){
+                    if(e== null){   //checking for exception
+                        if (objects.size()>0){      //checking if the list is empty
+
+                            //Gets the category of the current group, example General, Band etc
                             ParseObject parseObject = new ParseObject(objects.get(0).get("Category").toString());
+
+                            //puts the new image with details such as who posted it and group_id
                             parseObject.put("Posted_by", ParseUser.getCurrentUser().getUsername());
                             parseObject.put("Group_id", group_clicked_id);
 
+                            //Uploading process
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
