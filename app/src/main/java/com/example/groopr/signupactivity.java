@@ -242,7 +242,12 @@ public class signupactivity extends AppCompatActivity {
         }catch (java.lang.IllegalStateException e){
             e.printStackTrace();
         }
-        ParseUser.logOut();
+
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        if(parseUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
 
 
 

@@ -92,6 +92,7 @@ public class GroupFeed extends AppCompatActivity {
 
         ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Groups");
         parseQuery.whereEqualTo("GroupID", groupId);
+        parseQuery.orderByAscending("createdAt");
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -123,6 +124,7 @@ public class GroupFeed extends AppCompatActivity {
                             });
 
                             ParseQuery<ParseObject> parseQuery1 = ParseQuery.getQuery(groupcat);
+                            parseQuery1.orderByDescending("createdAt");
                             parseQuery1.whereEqualTo("Group_id", groupId);
                             parseQuery1.findInBackground(new FindCallback<ParseObject>() {
                                 @Override
