@@ -22,13 +22,16 @@ import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,6 +139,7 @@ public class signupactivity extends AppCompatActivity {
                     parseUser.put("Phone_number", phonenumber);
                     parseUser.put("Groups", "");
                     parseUser.put("GroupNames", "");
+                    parseUser.put("Marker_id", username + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())+"marker");
                     Log.i("checkey", "parseuserexecuted");
 
                     parseUser.signUpInBackground(new SignUpCallback() {

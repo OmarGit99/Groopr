@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.groopr.MainActivity;
 import com.example.groopr.PermissionUtils;
+import com.example.groopr.PhotoAdapter;
 import com.example.groopr.R;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -41,15 +42,28 @@ import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -62,11 +76,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private FusedLocationProviderClient fusedLocationClient;
 
+    String marker_id;
+
     private LocationCallback locationCallback;
 
     Boolean requestingLocationUpdates = true;
 
+    HashMap<Integer, Marker> hashMapMarker;
+
     LocationRequest locationRequest;
+    String[] user_groups;
+    String[] user_group_ids;
+    String user_group_selected;
+    ParseUser parseUser;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -76,7 +98,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
+    HashMap<String, ParseGeoPoint> markersandposters;
+    ArrayList<ParseGeoPoint> markers;
+    ArrayList<String> posters;
+    ArrayList<String> userormarker;
+
     private GoogleMap map;
+    String group_selected;
 
     protected void createLocationRequest() {
         locationRequest = LocationRequest.create();
@@ -149,6 +177,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //for hiding title and setting status bar color
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.blueappcolorthemedark));
+        try {
+            getSupportActionBar().hide();
+        }catch (NullPointerException e){
+            Log.i("check",e.getMessage());
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
@@ -166,6 +202,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
                     Log.i("MapsCheck", location.getLatitude() + " "+ location.getLongitude());
+                    LatLng userLoc = new LatLng(location.getLatitude(), location.getLongitude());
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLoc,16f));
                     // ...
                 }
             }
@@ -178,15 +216,109 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
         enableMyLocation();
+        hashMapMarker = new HashMap<>();
+        group_selected = "";
+
+        parseUser = ParseUser.getCurrentUser();
+
+        markersandposters = new HashMap<>();
+        userormarker = new ArrayList<>();
+        markers = new ArrayList<>();
+        posters = new ArrayList<>();
+
+
+        Intent intent =getIntent();
+        group_selected = intent.getStringExtra("GROUP_SELECTED");
+        Toast.makeText(MapsActivity.this, group_selected+"'s map!", Toast.LENGTH_SHORT).show();
+
+        user_groups = parseUser.get("GroupNames").toString().split(",");
+        user_group_ids = parseUser.get("Groups").toString().split(",");
+        user_group_selected = "";
+
+        for(int i = 0; i < user_groups.length; i++){
+            if (user_groups[i].matches(group_selected)){
+                user_group_selected = user_group_ids[i];
+                break;
+            }
+        }
+
+        ParseQuery<ParseObject> parseObjectParseQuery = ParseQuery.getQuery("Markers");
+        parseObjectParseQuery.whereEqualTo("Group_id", user_group_selected);
+
+        parseObjectParseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(e==null){
+                    if(objects.size()>0){
+                        Log.i("MapMarkers", Integer.toString(objects.size()));
+                        for (ParseObject object:objects) {
+                            Log.i("MapMarkersdb", object.getString("Posted_by")+object.getParseGeoPoint("Coords").toString());
+                            markers.add(object.getParseGeoPoint("Coords"));
+                            posters.add(object.getString("Posted_by"));
+
+                            userormarker.add(object.getString("User_or_Marker"));
+                        }
+                        Log.i("MapMarkers", markersandposters.toString());
+
+                        for (String user: userormarker
+                             ) {
+                            Log.i("MapMarkers", user);
+
+                        }
+
+                        int x = 0;
+                        for (int i = 0; i<posters.size();i++){
+                            if(userormarker.get(x).matches("USER")){
+                                if(posters.get(i).matches(parseUser.getUsername())) {
+                                    LatLng latLng = new LatLng(markers.get(i).getLatitude(), markers.get(i).getLongitude());
+                                    map.addMarker(new MarkerOptions().position(latLng).title("Your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                                }
+                                else{
+                                    LatLng latLng = new LatLng(markers.get(i).getLatitude(), markers.get(i).getLongitude());
+                                    map.addMarker(new MarkerOptions().position(latLng).title(posters.get(i) + "'s location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+
+                                }
+                            }
+                            else{
+                                LatLng latLng = new LatLng(markers.get(i).getLatitude(), markers.get(i).getLongitude());
+                                map.addMarker(new MarkerOptions().position(latLng).title(posters.get(i) + "'s Marker").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+                            }
+
+
+                            x++;
+                        }
+
+
+                    }
+                }
+                else{
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
+                    if(hashMapMarker.size()>0){
+                        Marker removemarker = hashMapMarker.get(1);
+                        removemarker.remove();
+                        hashMapMarker.remove(1);
+                    }
+
                     List<Address> listaddresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
-                    map.addMarker(new MarkerOptions().position(latLng).title(listaddresses.get(0).getPostalCode()+" "+ listaddresses.get(0).getLocality()));
-                   // intent.putExtra("CITYPLUSCODE", listaddresses.get(0).getCountryName()+" "+ listaddresses.get(0).getPostalCode());
+                    Marker marker = map.addMarker(new MarkerOptions().position(latLng).title(listaddresses.get(0).getPostalCode()+" "+ listaddresses.get(0).getLocality()));
+
+                    Toast.makeText(MapsActivity.this, "Location set", Toast.LENGTH_SHORT).show();
+
+                    hashMapMarker.put(1, marker);
+
+                    // intent.putExtra("CITYPLUSCODE", listaddresses.get(0).getCountryName()+" "+ listaddresses.get(0).getPostalCode());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -201,7 +333,97 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("LNG", Double.toString(latLng.longitude));
                 startActivity(intent);
                 */
-                Log.i("MapsCheck", Double.toString(latLng.latitude)+" "+ Double.toString(latLng.longitude));
+                final ParseGeoPoint parseGeoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+                Log.i("MapsCheck", parseGeoPoint.toString());
+
+
+                marker_id = parseUser.getString("Marker_id");
+
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Markers");
+                parseQuery.whereEqualTo("Marker_id", marker_id);
+                parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if(e==null){
+                            if(objects.size()>0){
+                                for (ParseObject object: objects) {
+                                    if(object.getString("Group_id").matches(user_group_selected)) {
+                                        object.put("Coords", parseGeoPoint);
+                                        object.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null) {
+                                                    Log.i("MapsCheck", "Done successfully");
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                } else {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        ParseObject parseObject = new ParseObject("Markers");
+
+                                        parseObject.put("Marker_id", marker_id);
+                                        parseObject.put("Group_id", user_group_selected);
+                                        parseObject.put("Group_name", group_selected);
+                                        parseObject.put("Posted_by", parseUser.getUsername());
+                                        parseObject.put("Coords", parseGeoPoint);
+                                        parseObject.put("User_or_Marker", "MARKER");
+
+                                        parseObject.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if(e == null){
+                                                    Log.i("MapsCheck", "Done successfully");
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                }
+                                                else{
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                            else{
+                                ParseObject parseObject = new ParseObject("Markers");
+
+                                parseObject.put("Marker_id", marker_id);
+                                parseObject.put("Group_id", user_group_selected);
+                                parseObject.put("Group_name", group_selected);
+                                parseObject.put("Posted_by", parseUser.getUsername());
+                                parseObject.put("Coords", parseGeoPoint);
+                                parseObject.put("User_or_Marker", "MARKER");
+
+                                parseObject.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e == null){
+                                            Log.i("MapsCheck", "Done successfully");
+                                            finish();
+                                            startActivity(getIntent());
+                                        }
+                                         else{
+                                            e.printStackTrace();
+                                       }
+                                    }
+                                });
+
+
+                            }
+                        }
+                        else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
+
 
 
 
@@ -217,10 +439,115 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             fusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
-                        public void onSuccess(Location location) {
+                        public void onSuccess(final Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                Log.i("MapsCheck", location.getLatitude() + " " + location.getLongitude());
+
+                                final ParseGeoPoint usergeopoint = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+                                Log.i("MapsCheck", usergeopoint.toString());
+
+                                parseUser.put("Location", usergeopoint);
+
+                                user_groups = ParseUser.getCurrentUser().get("GroupNames").toString().split(",");
+                                user_group_ids = ParseUser.getCurrentUser().get("Groups").toString().split(",");
+                                user_group_selected = "";
+
+                                for(int i = 0; i < user_groups.length; i++){
+                                    if (user_groups[i].matches(group_selected)){
+                                        user_group_selected = user_group_ids[i];
+                                        break;
+                                    }
+                                }
+
+                                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Markers");
+                                parseQuery.whereEqualTo("Marker_id", ParseUser.getCurrentUser().getUsername() + "_marker");
+                                parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                                    @Override
+                                    public void done(List<ParseObject> objects, ParseException e) {
+                                        if(e==  null){
+                                            if(objects.size() >0){
+                                                for (ParseObject parseobject:objects) {
+                                                    if(parseobject.getString("Group_id").matches(user_group_selected)) {
+                                                        parseobject.put("Coords", usergeopoint);
+                                                        parseobject.saveInBackground(new SaveCallback() {
+                                                            @Override
+                                                            public void done(ParseException e) {
+                                                                if (e == null) {
+                                                                } else {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                    else{
+                                                        ParseObject parseObject = new ParseObject("Markers");
+
+                                                        parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+"_marker");
+                                                        parseObject.put("Group_id", user_group_selected);
+                                                        parseObject.put("Group_name", group_selected);
+                                                        parseObject.put("Posted_by", parseUser.getUsername());
+                                                        parseObject.put("Coords", usergeopoint);
+                                                        parseObject.put("User_or_Marker", "USER");
+
+                                                        parseObject.saveInBackground(new SaveCallback() {
+                                                            @Override
+                                                            public void done(ParseException e) {
+                                                                if(e == null){
+                                                                    Log.i("MapsCheck", "Done successfully");
+                                                                }
+                                                                else{
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                ParseObject parseObject = new ParseObject("Markers");
+
+                                                parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+"_marker");
+                                                parseObject.put("Group_id", user_group_selected);
+                                                parseObject.put("Group_name", group_selected);
+                                                parseObject.put("Posted_by", parseUser.getUsername());
+                                                parseObject.put("Coords", usergeopoint);
+                                                parseObject.put("User_or_Marker", "USER");
+
+                                                parseObject.saveInBackground(new SaveCallback() {
+                                                    @Override
+                                                    public void done(ParseException e) {
+                                                        if(e == null){
+                                                            Log.i("MapsCheck", "Done successfully");
+                                                        }
+                                                        else{
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        }
+                                        else{
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                                parseUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e==null){
+                                            Log.i("MapsCheck", "Location saved successfully");
+                                        }
+                                        else{
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                                LatLng userloc = new LatLng(location.getLatitude(), location.getLongitude());
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(userloc,16f));
                             }
 
                         }
@@ -258,7 +585,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "This is you!", Toast.LENGTH_LONG).show();
     }
 
 

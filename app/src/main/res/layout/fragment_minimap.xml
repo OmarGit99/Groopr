@@ -12,10 +12,40 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="376dp"
         android:background="@color/blueappcolorthemedark"
-        android:text="Map"
+        android:text="Open Map"
         android:textColor="@color/appcolorlightv2.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/groupcatsspin3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/dropdowncolorv2.1"
+        android:minWidth="100dp"
+        android:padding="3dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo_bhaina"
+        android:text="Choose your Group"
+        android:textColor="@color/appcolorlightv2.1"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.242" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
