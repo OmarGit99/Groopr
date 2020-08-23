@@ -340,7 +340,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 marker_id = parseUser.getString("Marker_id");
 
                 ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Markers");
-                parseQuery.whereEqualTo("Marker_id", marker_id);
+                parseQuery.whereEqualTo("Marker_id", marker_id+group_selected);
                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
@@ -365,7 +365,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     else{
                                         ParseObject parseObject = new ParseObject("Markers");
 
-                                        parseObject.put("Marker_id", marker_id);
+                                        parseObject.put("Marker_id", marker_id+group_selected);
                                         parseObject.put("Group_id", user_group_selected);
                                         parseObject.put("Group_name", group_selected);
                                         parseObject.put("Posted_by", parseUser.getUsername());
@@ -392,7 +392,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             else{
                                 ParseObject parseObject = new ParseObject("Markers");
 
-                                parseObject.put("Marker_id", marker_id);
+                                parseObject.put("Marker_id", marker_id+group_selected);
                                 parseObject.put("Group_id", user_group_selected);
                                 parseObject.put("Group_name", group_selected);
                                 parseObject.put("Posted_by", parseUser.getUsername());
@@ -460,7 +460,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
 
                                 ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("Markers");
-                                parseQuery.whereEqualTo("Marker_id", ParseUser.getCurrentUser().getUsername() + "_marker");
+                                parseQuery.whereEqualTo("Marker_id", ParseUser.getCurrentUser().getUsername() +group_selected+ "_marker");
                                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
                                     @Override
                                     public void done(List<ParseObject> objects, ParseException e) {
@@ -482,7 +482,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                     else{
                                                         ParseObject parseObject = new ParseObject("Markers");
 
-                                                        parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+"_marker");
+                                                        parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+group_selected+"_marker");
                                                         parseObject.put("Group_id", user_group_selected);
                                                         parseObject.put("Group_name", group_selected);
                                                         parseObject.put("Posted_by", parseUser.getUsername());
@@ -507,7 +507,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             else{
                                                 ParseObject parseObject = new ParseObject("Markers");
 
-                                                parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+"_marker");
+                                                parseObject.put("Marker_id", ParseUser.getCurrentUser().getUsername()+group_selected+"_marker");
                                                 parseObject.put("Group_id", user_group_selected);
                                                 parseObject.put("Group_name", group_selected);
                                                 parseObject.put("Posted_by", parseUser.getUsername());
