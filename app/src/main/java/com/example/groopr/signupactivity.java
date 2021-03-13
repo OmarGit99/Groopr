@@ -239,7 +239,7 @@ public class signupactivity extends AppCompatActivity {
                     .applicationId("myappID")
                     // if desired
                     .clientKey("")
-                    .server("http://13.58.151.77/parse/")
+                    .server("http://18.219.85.117/parse/")
                     .build()
             );
 

@@ -35,6 +35,7 @@
         android:textSize="52sp"
         app:layout_constraintBottom_toTopOf="@+id/addgroupbutton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

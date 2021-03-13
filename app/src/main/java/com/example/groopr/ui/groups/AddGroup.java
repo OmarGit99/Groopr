@@ -290,6 +290,8 @@ public class AddGroup extends AppCompatActivity {
         groupcats.add("Family");
         groupcats.add("Band");
         groupcats.add("School");
+        groupcats.add("Fashion");
+        groupcats.add("Travel");
         groupcats.add("Other");
 
         //same code but for textview below the imageview
