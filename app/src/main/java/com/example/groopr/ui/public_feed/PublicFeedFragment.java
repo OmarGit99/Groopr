@@ -170,7 +170,7 @@ public class PublicFeedFragment extends Fragment {
 
 
 
-                /*
+
                 ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery(groupCatSelected);
                 parseQuery.orderByDescending("createdAt");
                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
@@ -210,7 +210,7 @@ public class PublicFeedFragment extends Fragment {
                     }
                 });
 
-                 */
+
             }
 
             @Override
