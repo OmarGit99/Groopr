@@ -12,5 +12,5 @@
 
 BEFORE USING READ THE FOLLOWING POINTS:  
 -App will not work if aws server is shut down, please ask me for server status, new credentials might be needed to be put in Parse init in signupactivity.java
-edit- samir
+edit- samir14z
 
