@@ -1,15 +1,17 @@
 # Groopr
   
-•	A simple app which functions similar to a matchmaking system on a game.  
-•	You can choose an activity for which you need a group for or create your own group.  
-•	Mega groups for colleges etc…. or smaller quick groups of >10  
-•	Other features of competition  
-•	You can choose an activity for which you need a group for or create your own group.  
-•	You can then search for a group within your city/area/country for the respective roles you have chosen.  
-•	Once a group has been created you can chat with the group and choose and book a meetup spot, if you need to  
-•	Matchmaking system similar to ones found on dating apps based on users interest and accomplishments  
-•	Each group can post their projects in a social media type feed related to the theme  
 
-BEFORE USING READ THE FOLLOWING POINTS:  
--App will not work if aws server is shut down, please ask me for server status, new credentials might be needed to be put in Parse init in signupactivity.java
+Groopr
+• An innovative app designed to facilitate group formation for various activities, inspired by matchmaking systems in games.
+• Users can either select an activity they need a group for or create their own group.
+• The app supports both mega groups, catering to larger communities like colleges, and smaller quick groups with less than 10 members.
+• Offers additional features like competitions to enhance user engagement.
+• Users can search for groups within their city, area, or country, based on their chosen roles.
+• The app allows group members to communicate through chat and provides the option to choose and book a meetup spot if necessary.
+• Utilizes a matchmaking system akin to popular dating apps, matching users based on shared interests and accomplishments.
+• Groups can showcase their projects in a social media-style feed dedicated to the theme.
+
+IMPORTANT NOTES BEFORE USAGE:
+
+Please be aware that the app relies on the availability of the AWS server. Contact me for server status, as new credentials may need to be inputted into the Parse initialization in signupactivity.java.
 
